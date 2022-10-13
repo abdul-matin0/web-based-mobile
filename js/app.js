@@ -1,51 +1,66 @@
 const app = new Vue({
     el: '#app',
     data: {
-        products: [
-            { id: 1, subject: 'Math', location: 'London', imageURL: 'assets/subject.jpg', altText: 'math image', price: 100, spaces: 5 },
-            { id: 2, subject: 'English', location: 'London', imageURL: 'assets/subject.jpg', altText: 'math image', price: 100, spaces: 5 },
-            { id: 3, subject: 'Chemistry', location: 'Dubai', imageURL: 'assets/subject.jpg', altText: 'math image', price: 100, spaces: 5 },
-            { id: 4, subject: 'Physics', location: 'Manchester', imageURL: 'assets/subject.jpg', altText: 'math image', price: 100, spaces: 5 },
-            { id: 5, subject: 'Biology', location: 'London', imageURL: 'assets/subject.jpg', altText: 'math image', price: 100, spaces: 5 }
-        ],
-        cart: []
+        lessons: lessons,
+        cart: [],
+        disableCartButton: true
     },
     methods: {
-        // adds a product to cart
-        addToCart(productId){
-            // find selected product id
-            var product = this.getProductById(productId);
-            if(product.spaces > 0){
-                // decrease product space
-                --product.spaces;
-                
-                // get existing product from cart
-                var itemInCart = this.cart.find(u => u.productId == productId);
+        // adds a lesson to cart
+        addToCart(lessonId){
+            // find selected lesson id
+            var lesson = this.getLessonById(lessonId);
+            if(lesson.spaces > 0){
+                // decrease lesson space
+                --lesson.spaces;
+
+                // get existing item from cart
+                var itemInCart = this.getCartItemFromCartByLessonId(lessonId);
                 if(itemInCart != null){
                     // update existing item in cart
                     ++itemInCart.spaces;
                 }else{
                     // adding new item to cart
-                    itemInCart = {productId: productId, spaces: 1, product: product};
+                    itemInCart = {lessonId: lessonId, spaces: 1, lesson: lesson};
                     this.cart.push(itemInCart);
                 }
                 
-                // save updates in product and cart
-                localStorage.setItem('products', JSON.stringify(this.products));
-                localStorage.setItem('cart', JSON.stringify(this.cart));
+                // save updates in lesson and cart
+                this.saveLessonToStorage();
+                this.saveCartToStorage();
+
+                this.enableDisableCartButton();
             }
         },
-        // removes a product from cart
-        removeFromCart(productId){
-            // find selected product id
-            var product = this.getProductById(productId);
-            
+        // removes a lesson from cart
+        removeFromCart(lessonId){
+            // find selected lesson in cart
+            var itemInCart = this.getCartItemFromCartByLessonId(lessonId);
+
+            if(itemInCart.spaces == 1){
+                // if just one item space is left, remove item completely from cart
+                var index = this.cart.map(x => x.lessonId).indexOf(lessonId);
+                this.cart.splice(index, 1);
+
+                this.enableDisableCartButton();
+            }else{
+                // reduce number of spaces of item in cart
+                --itemInCart.spaces;
+            }
+
+            // increase lesson space 
+            var lesson = this.getLessonById(lessonId);
+            ++lesson.spaces;
+
+            // save updates in lesson and cart
+            this.saveLessonToStorage();
+            this.saveCartToStorage();
         },
         onPageLoad(){
-            // gets product from persistent storage
-            var products = JSON.parse(localStorage.getItem('products'));
-            if(products != null){
-                this.products = products;
+            // gets lesson from persistent storage
+            var lessons = JSON.parse(localStorage.getItem('lessons'));
+            if(lessons != null){
+                this.lessons = lessons;
             }
 
             // gets cart from persistent storage
@@ -54,10 +69,33 @@ const app = new Vue({
                 this.cart = cart;
             }
         },
-        // get product by id
-        getProductById(productId){
-            var product = this.products.find(u => u.id == productId);
-            return product;
+        // get lesson by id
+        getLessonById(lessonId){
+            var lesson = this.lessons.find(u => u.id == lessonId);
+            return lesson;
+        },
+        // get item in cart by id
+        getCartItemFromCartByLessonId(lessonId){
+            var item = this.cart.find(u => u.lessonId == lessonId);
+            return item;
+        },
+        // saves lessons to local storage
+        saveLessonToStorage(){
+            localStorage.setItem('lessons', JSON.stringify(this.lessons));
+        },
+        // saves cart to local storage
+        saveCartToStorage(){
+            localStorage.setItem('cart', JSON.stringify(this.cart));
+        },
+        // enable/disabled cart button
+        enableDisableCartButton(){            
+            if(this.cart.length > 0){
+                // enable button
+                this.disableCartButton = false;
+            }else{
+                this.disableCartButton = true
+            }
+            
         }
     },
     created: function(){
