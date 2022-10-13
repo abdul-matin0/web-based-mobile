@@ -24,72 +24,44 @@
         }
 
         .card-width {
-            width: 18rem;
+            width: 20rem;
+        }
+
+        .fs-14{
+            font-size: 14px;
+        }
+
+        .mt-70{
+            margin-top: 70px;
         }
     </style>
 </head>
 
 <body>
     <div class="container py-5 px-md-5" id="app">
-        <div class="row ">
-            <div class="col-sm-5 col-md-4 mt-5">
-                <div class="card card-width rounded-0">
+        <p class="text-center">Home</p>
+        <hr>
+        <div class="row">
+            <div class="col-sm-5 col-md-4 mt-4" v-for="product in products">
+                <div class="card card-width rounded-0 shadow-sm">
                     <div class="card-body d-flex justify-content-between ">
                         <div>
-                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                            <span class="card-text">Subject</span><br>
-                            <span class="card-text">Subject</span><br>
-                            <span class="card-text">Subject</span><br>
-                            <span class="card-text">Subject</span>
+                            <span class="card-text fs-14">Subject: <b class="card-subtitle mb-2 fs-14">{{product.subject}}</b></span><br>
+                            <span class="card-text fs-14">Location: <b class="card-subtitle mb-2 fs-14">{{product.location}}</b></span><br>
+                            <span class="card-text fs-14">Price: <b class="card-subtitle mb-2 fs-14">{{product.price}}</b></span><br>
+                            <span class="card-text fs-14">Spaces: <b class="card-subtitle mb-2 fs-14">{{product.spaces}}</b></span><br>
 
-                            <a href="#" class="card-link btn btn-dark btn-sm mt-5">Another link</a>
-
+                            <btn @click="addToCart(product.id)" class="card-link btn btn-dark btn-sm mt-70 px-2"> <i class="zmdi zmdi-plus mx-1"></i> Add to cart </btn>
                         </div>
-                        <img src="assets/subject.jpg" alt="" class="img-fluid border rounded shadow-sm" style="height: 200px; width: 100px; object-fit: cover">
+                        <img v-bind:src="product.imageURL" v-bind:alt="product.altText" class="img-fluid border rounded" style="height: 200px; width: 120px; object-fit: cover">
                     </div>
 
                 </div>
             </div>
-
-            <div class="col-sm-5 col-md-4 mt-5">
-                <div class="card card-width rounded-0">
-                    <div class="card-body d-flex justify-content-between ">
-                        <div>
-                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                            <span class="card-text">Subject</span><br>
-                            <span class="card-text">Subject</span><br>
-                            <span class="card-text">Subject</span><br>
-                            <span class="card-text">Subject</span>
-
-                            <a href="#" class="card-link btn btn-dark btn-sm mt-5">Another link</a>
-
-                        </div>
-                        <img src="assets/subject.jpg" alt="" class="img-fluid border rounded shadow-sm" style="height: 200px; width: 100px; object-fit: cover">
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-sm-5 col-md-4 mt-5">
-                <div class="card card-width rounded-0">
-                    <div class="card-body d-flex justify-content-between ">
-                        <div>
-                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                            <span class="card-text">Subject</span><br>
-                            <span class="card-text">Subject</span><br>
-                            <span class="card-text">Subject</span><br>
-                            <span class="card-text">Subject</span>
-
-                            <a href="#" class="card-link btn btn-dark btn-sm mt-5">Another link</a>
-
-                        </div>
-                        <img src="assets/subject.jpg" alt="" class="img-fluid border rounded shadow-sm" style="height: 200px; width: 100px; object-fit: cover">
-                    </div>
-
-                </div>
-            </div>
+            
         </div>
         <div class="row mt-5 text-center">
-            <div class="col-12">
+            <div class="col-12 ">
                 <a href="cart.html" class="card-link btn btn-dark btn-sm px-3"><i class="zmdi zmdi-long-arrow-right mx-2"></i>Go
                     to cart</a>
             </div>
