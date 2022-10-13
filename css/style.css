@@ -1,0 +1,15 @@
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+.card-width {
+    width: 20rem;
+}
+
+.fs-14{
+    font-size: 14px;
+}
+
+.mt-70{
+    margin-top: 70px;
+}
