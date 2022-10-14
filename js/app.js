@@ -2,8 +2,7 @@ const app = new Vue({
     el: '#app',
     data: {
         lessons: lessons,
-        cart: [],
-        disableCartButton: true
+        cart: []
     },
     methods: {
         // adds a lesson to cart
@@ -28,8 +27,6 @@ const app = new Vue({
                 // save updates in lesson and cart
                 this.saveLessonToStorage();
                 this.saveCartToStorage();
-
-                this.enableDisableCartButton();
             }
         },
         // removes a lesson from cart
@@ -41,8 +38,6 @@ const app = new Vue({
                 // if just one item space is left, remove item completely from cart
                 var index = this.cart.map(x => x.lessonId).indexOf(lessonId);
                 this.cart.splice(index, 1);
-
-                this.enableDisableCartButton();
             }else{
                 // reduce number of spaces of item in cart
                 --itemInCart.spaces;
@@ -87,15 +82,10 @@ const app = new Vue({
         saveCartToStorage(){
             localStorage.setItem('cart', JSON.stringify(this.cart));
         },
-        // enable/disabled cart button
-        enableDisableCartButton(){            
-            if(this.cart.length > 0){
-                // enable button
-                this.disableCartButton = false;
-            }else{
-                this.disableCartButton = true
-            }
-            
+    },
+    computed: {
+        disableCartButton: function(){
+            return this.cart.length > 0 ? false : true;
         }
     },
     created: function(){
