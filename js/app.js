@@ -2,7 +2,8 @@ const app = new Vue({
     el: '#app',
     data: {
         lessons: lessons,
-        cart: []
+        cart: [],
+        onHomePage: true
     },
     methods: {
         // adds a lesson to cart
@@ -38,6 +39,9 @@ const app = new Vue({
                 // if just one item space is left, remove item completely from cart
                 var index = this.cart.map(x => x.lessonId).indexOf(lessonId);
                 this.cart.splice(index, 1);
+
+                // redirect user back to home
+                this.togglePage();
             }else{
                 // reduce number of spaces of item in cart
                 --itemInCart.spaces;
@@ -82,12 +86,16 @@ const app = new Vue({
         saveCartToStorage(){
             localStorage.setItem('cart', JSON.stringify(this.cart));
         },
-    },
-    computed: {
-        disableCartButton: function(){
-            return this.cart.length > 0 ? false : true;
+        // toggle page -> index -> cart
+        togglePage(){
+            this.onHomePage = !this.onHomePage;
         }
     },
+   computed: {
+       disableCartButton: function(){
+           return this.cart.length <= 0 ? true : false;
+       }
+   },
     created: function(){
         this.onPageLoad();
      },    
