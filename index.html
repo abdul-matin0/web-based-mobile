@@ -23,6 +23,7 @@
 
 <body>
     <div class="container py-5 px-md-5" id="app">
+        <!-- home -->
         <div v-if="onHomePage">
             <p class="text-center">Home</p>
             <hr>
@@ -60,6 +61,7 @@
             </div>
         </div>
 
+        <!-- cart -->
         <div v-else>
             <p class="text-center"><span v-on:click="togglePage" style="text-decoration: none">Home</span> <i class="fas fa-arrow-right"></i>
                 <span class="mb-2 text-dark">Cart <i class="fas fa-shopping-cart"></i> </span></p>

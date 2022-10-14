@@ -40,8 +40,10 @@ const app = new Vue({
                 var index = this.cart.map(x => x.lessonId).indexOf(lessonId);
                 this.cart.splice(index, 1);
 
-                // redirect user back to home
-                this.togglePage();
+                // redirect user back to home if cart is empty
+                if(this.cart.length <= 0){
+                    this.togglePage();
+                }
             }else{
                 // reduce number of spaces of item in cart
                 --itemInCart.spaces;
