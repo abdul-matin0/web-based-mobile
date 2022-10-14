@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600" rel="stylesheet">
-    <!-- icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <!-- fontawesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <!-- style -->
     <link rel="stylesheet" href="css/style.css">
     <!-- bootstrap -->
@@ -37,7 +37,7 @@
                                 <span class="card-text fs-14">Spaces: <b class="card-subtitle mb-2 fs-14">{{lesson.spaces}}</b></span><br>
 
                                 <button v-bind:class="{disabled: lesson.spaces <= 0}" @click="addToCart(lesson.id)"
-                                    class="card-link btn btn-dark btn-sm mt-70 px-2"> <i class="zmdi zmdi-plus mx-1"></i>
+                                    class="card-link btn btn-dark btn-sm mt-70 px-2"> <i class="fas fa-plus mx-1"></i>
                                     Add to cart </button>
                             </div>
                             <img v-bind:src="lesson.imageURL" v-bind:alt="lesson.altText" class="img-fluid border rounded"
@@ -51,18 +51,18 @@
             <div class="row mt-5 text-center">
                 <div class="col-12 ">
                     <button v-if="disableCartButton"
-                        class="disabled card-link btn btn-dark btn-sm px-3"><i class="zmdi zmdi-long-arrow-right mx-2"></i>Go
+                        class="disabled card-link btn btn-dark btn-sm px-3"><i class="fas fa-arrow-right mx-2"></i>Go
                         to cart</button>
                         <button v-else v-on:click="togglePage" 
-                        class="card-link btn btn-dark btn-sm px-3"><i class="zmdi zmdi-long-arrow-right mx-2"></i>Go
+                        class="card-link btn btn-dark btn-sm px-3"><i class="fas fa-arrow-right mx-2"></i>Go
                         to cart</button>
                 </div>
             </div>
         </div>
 
         <div v-else>
-            <p class="text-center"><span v-on:click="togglePage" style="text-decoration: none">Home</span> <i class="zmdi zmdi-long-arrow-right"></i>
-                <span class="mb-2 text-dark">Cart <i class="zmdi zmdi-shopping-cart"></i> </span></p>
+            <p class="text-center"><span v-on:click="togglePage" style="text-decoration: none">Home</span> <i class="fas fa-arrow-right"></i>
+                <span class="mb-2 text-dark">Cart <i class="fas fa-shopping-cart"></i> </span></p>
             <hr>
             <div class="row">
                 <div class="col-sm-5 col-md-4 mt-4" v-for="item in cart">
@@ -75,7 +75,7 @@
                                 <span class="card-text fs-14">Spaces: <b class="card-subtitle mb-2 fs-14">{{item.spaces}}</b></span><br>
 
                                 <button @click="removeFromCart(item.lessonId)" class="card-link btn btn-dark btn-sm mt-70 px-3">
-                                    <i class="zmdi zmdi-minus mx-1"></i> Remove </button>
+                                    <i class="fas fa-minus mx-1"></i> Remove </button>
                             </div>
                             <img v-bind:src="item.lesson.imageURL" v-bind:alt="item.lesson.altText" class="img-fluid border rounded"
                                 style="height: 200px; width: 120px; object-fit: cover">
@@ -90,13 +90,13 @@
                     <div class="col-12 ">
                        
                             <button v-on:click="togglePage" 
-                            class="card-link btn btn-dark btn-sm px-3"><i class="zmdi zmdi-long-arrow-right mx-2"></i>Go
+                            class="card-link btn btn-dark btn-sm px-3"><i class="fas fa-arrow-left mx-2"></i>Go
                             to Home</button>
                     </div>
                 </div>
             <div class="row mt-5 text-center">
                 <div class="col-12">
-                    <a href="cart.html" class="card-link btn btn-dark btn-sm px-3"><i class="zmdi zmdi-long-arrow-right mx-2"></i>Checkout</a>
+                    <a href="cart.html" class="card-link btn btn-dark btn-sm px-3"><i class="fas fa-arrow-right mx-2"></i>Checkout</a>
                 </div>
             </div>
         </div>
