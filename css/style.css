@@ -2,12 +2,12 @@
     font-family: 'Inter', sans-serif;
 }
 
-.card-width {
-    width: 20rem;
-}
-
 .fs-14{
     font-size: 14px;
+}
+
+.fs-18{
+    font-size: 18px;
 }
 
 .mt-70{
@@ -16,4 +16,14 @@
 
 .disabled{
     background-color: #f8f8f8;
+}
+
+.card-width {
+    width: 18rem;
+}
+
+@media screen and (max-width: 1200px) {
+    .card-width{
+        width: 15rem;
+    }
 }
