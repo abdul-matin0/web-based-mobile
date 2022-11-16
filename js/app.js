@@ -6,6 +6,7 @@ const app = new Vue({
         sortBy: 'subject',  // default sorting value
         orderBy: 'ascending', // default order value
         name: '',
+        search: '',
         phoneNumber: '',
         onHomePage: true
     },
@@ -172,6 +173,16 @@ const app = new Vue({
         }
     },
    computed: {
+        // filter lesson list based on search
+        filteredLessonList: function(){
+            const lessons = this.lessons.filter(
+                (lesson) =>
+                  lesson.subject.toLowerCase().includes(this.search.toLowerCase()) ||
+                  lesson.location.toLowerCase().includes(this.search.toLowerCase())
+              );
+
+            return lessons
+        },
         // disable cart button if no item is existing in the cart
         disableCartButton: function(){
            return this.cart.length <= 0 ? true : false;
