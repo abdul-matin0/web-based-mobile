@@ -5,6 +5,8 @@ const app = new Vue({
         cart: [],
         sortBy: 'subject',  // default sorting value
         orderBy: 'ascending', // default order value
+        name: '',
+        phoneNumber: '',
         onHomePage: true
     },
     methods: {
@@ -26,10 +28,6 @@ const app = new Vue({
                     itemInCart = {lessonId: lessonId, spaces: 1, lesson: lesson};
                     this.cart.push(itemInCart);
                 }
-                
-                // save updates in lesson and cart
-                this.saveLessonToStorage();
-                this.saveCartToStorage();
             }
         },
         // removes a lesson from cart
@@ -54,23 +52,6 @@ const app = new Vue({
             // increase lesson space 
             var lesson = this.getLessonById(lessonId);
             ++lesson.spaces;
-
-            // save updates in lesson and cart
-            this.saveLessonToStorage();
-            this.saveCartToStorage();
-        },
-        onPageLoad(){
-            // gets lesson from persistent storage
-            var lessons = JSON.parse(localStorage.getItem('lessons'));
-            if(lessons != null){
-              //  this.lessons = lessons;
-            }
-
-            // gets cart from persistent storage
-            var cart = JSON.parse(localStorage.getItem('cart'));
-            if(cart != null){
-              //  this.cart = cart;
-            }
         },
         // get lesson by id
         getLessonById(lessonId){
@@ -81,14 +62,6 @@ const app = new Vue({
         getCartItemFromCartByLessonId(lessonId){
             var item = this.cart.find(u => u.lessonId == lessonId);
             return item;
-        },
-        // saves lessons to local storage
-        saveLessonToStorage(){
-            localStorage.setItem('lessons', JSON.stringify(this.lessons));
-        },
-        // saves cart to local storage
-        saveCartToStorage(){
-            localStorage.setItem('cart', JSON.stringify(this.cart));
         },
         // toggle page -> index -> cart
         togglePage(){
@@ -184,12 +157,35 @@ const app = new Vue({
                     }
             }
         },
-        
+        // validate name
+        validateNameInput(){
+            let result = /^[a-zA-Z]+$/.test(this.name);            
+            return result;
+        },
+        // validate phone
+        validatePhoneInput(){
+            let result = /^\d+$/.test(this.phoneNumber);            
+            return result;
+        },
+        showConfirmationDialog(){
+            alert('Order has been submitted successfully')
+        }
     },
    computed: {
-       disableCartButton: function(){
+        // disable cart button if no item is existing in the cart
+        disableCartButton: function(){
            return this.cart.length <= 0 ? true : false;
-       },
+        },
+        // enable/disable checkout button if name and phoneNumber input is valid
+        enableCheckoutButton: function(){
+            var nameIsValid = this.validateNameInput();
+            var phoneIsValid = this.validatePhoneInput();
+
+            if(nameIsValid && phoneIsValid){
+                return true;
+            }
+            return false
+        }
    },
    watch: {
     sortBy: function()
@@ -199,8 +195,5 @@ const app = new Vue({
     orderBy: function(){
         this.sortLesson()
     }
-  },
-    created: function(){
-        this.onPageLoad();
-     },    
+  }  
 });
