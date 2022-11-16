@@ -3,6 +3,8 @@ const app = new Vue({
     data: {
         lessons: lessons,
         cart: [],
+        sortBy: 'subject',  // default sorting value
+        orderBy: 'ascending', // default order value
         onHomePage: true
     },
     methods: {
@@ -61,13 +63,13 @@ const app = new Vue({
             // gets lesson from persistent storage
             var lessons = JSON.parse(localStorage.getItem('lessons'));
             if(lessons != null){
-                this.lessons = lessons;
+              //  this.lessons = lessons;
             }
 
             // gets cart from persistent storage
             var cart = JSON.parse(localStorage.getItem('cart'));
             if(cart != null){
-                this.cart = cart;
+              //  this.cart = cart;
             }
         },
         // get lesson by id
@@ -91,13 +93,113 @@ const app = new Vue({
         // toggle page -> index -> cart
         togglePage(){
             this.onHomePage = !this.onHomePage;
-        }
+        },
+        // filter lesson based on sortBy selection
+        sortLesson: function(){
+            if(this.orderBy == 'ascending'){
+                switch(this.sortBy){
+                    // filter by subject
+                    case 'subject':
+                        this.lessons.sort((a, b) => {
+                            let x = a.subject.toLowerCase();
+                            let y = b.subject.toLowerCase();
+                            if (x < y) {return -1;}
+                            if (x > y) {return 1;}
+                            return 0;
+                        })
+                        break;
+                    // filter by location
+                    case 'location':
+                        this.lessons.sort((a, b) => {
+                            let x = a.location.toLowerCase();
+                            let y = b.location.toLowerCase();
+                            if (x < y) {return -1;}
+                            if (x > y) {return 1;}
+                            return 0;
+                        })
+                        break;
+                    // filter by price
+                    case 'price':
+                        this.lessons.sort((a, b) => {
+                            let x = a.price;
+                            let y = b.price;
+                            if (x < y) {return -1;}
+                            if (x > y) {return 1;}
+                            return 0;
+                        })
+                        break;
+                    // filter by availability
+                    case 'availability':
+                        this.lessons.sort((a, b) => {
+                            let x = a.spaces;
+                            let y = b.spaces;
+                            if (x < y) {return -1;}
+                            if (x > y) {return 1;}
+                            return 0;
+                        })
+                        break;
+                    }
+            }else{
+                switch(this.sortBy){
+                    // filter by subject
+                    case 'subject':
+                        this.lessons.sort((a, b) => {
+                            let x = a.subject.toLowerCase();
+                            let y = b.subject.toLowerCase();
+                            if (x < y) {return 1;}
+                            if (x > y) {return -1;}
+                            return 0;
+                        })
+                        break;
+                    // filter by location
+                    case 'location':
+                        this.lessons.sort((a, b) => {
+                            let x = a.location.toLowerCase();
+                            let y = b.location.toLowerCase();
+                            if (x < y) {return 1;}
+                            if (x > y) {return -1;}
+                            return 0;
+                        })
+                        break;
+                    // filter by price
+                    case 'price':
+                        this.lessons.sort((a, b) => {
+                            let x = a.price;
+                            let y = b.price;
+                            if (x < y) {return 1;}
+                            if (x > y) {return -1;}
+                            return 0;
+                        })
+                        break;
+                    // filter by availability
+                    case 'availability':
+                        this.lessons.sort((a, b) => {
+                            let x = a.spaces;
+                            let y = b.spaces;
+                            if (x < y) {return 1;}
+                            if (x > y) {return -1;}
+                            return 0;
+                        })
+                        break;
+                    }
+            }
+        },
+        
     },
    computed: {
        disableCartButton: function(){
            return this.cart.length <= 0 ? true : false;
-       }
+       },
    },
+   watch: {
+    sortBy: function()
+    {
+      this.sortLesson();
+    },
+    orderBy: function(){
+        this.sortLesson()
+    }
+  },
     created: function(){
         this.onPageLoad();
      },    

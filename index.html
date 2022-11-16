@@ -32,39 +32,39 @@
                 <!-- sort section -->
                 <div class="col-md-3 col-lg-2 card rounded-0 pt-4 mt-2 fs-14">
                     
-                    <b class="pb-2">Filter by:</b>
+                    <b class="pb-2">Sort by: {{ sortBy }}</b>
                     <!-- main sorting attributes -->
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="optradio">Subject
+                            <input type="radio" class="form-check-input" v-model="sortBy" value="subject">Subject
                         </label>
                     </div>
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="optradio">Location
+                            <input type="radio" class="form-check-input" v-model="sortBy" value="location">Location
                         </label>
                     </div>
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="optradio">Price
+                            <input type="radio" class="form-check-input" v-model="sortBy" value="price">Price
                         </label>
                     </div>
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="optradio">Availability
+                            <input type="radio" class="form-check-input" v-model="sortBy" value="availability">Availability
                         </label>
                     </div>
                     <hr>
-                    <b class="pb-2">Sort by:</b>
+                    <b class="pb-2">Order by:</b>
                     <!-- additional sorting -->
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="optradio">Ascending order
+                            <input type="radio" class="form-check-input" v-model="orderBy" value="ascending">Ascending order
                         </label>
                     </div>
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="optradio">Descending order
+                            <input type="radio" class="form-check-input" v-model="orderBy" value="descending">Descending order
                         </label>
                     </div>
                 </div>
